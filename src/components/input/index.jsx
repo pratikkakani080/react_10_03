@@ -9,10 +9,16 @@ function Input(props) {
         id={props.id}
         name={props.name}
         value={props.value}
-        placeholder={props.ph || 'Please enter value'}
+        placeholder={props.ph || "Please enter value"}
         onChange={props.handleChange}
       />
-      <Button color={props.buttonColor} buttonText={props.buttonText} redirectUrl={"test"} />
+      {!props.hideButton && (
+        <Button
+          color={props.buttonColor}
+          buttonText={props.buttonText}
+          handleClick={() => window.alert('button clicked from input')}
+        />
+      )}
     </div>
   );
 }

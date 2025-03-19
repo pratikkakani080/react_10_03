@@ -2,10 +2,14 @@ import React from "react";
 
 export default function Button(props) {
   return (
-    <a href={props.redirectUrl} target="blank">
-      <button style={{ color: props.color || "yellow" }}>
-        {props.buttonText || "Click me"}
-      </button>
-    </a>
+    <button
+      style={{
+        color: props.color || "yellow",
+        fontSize: props.fontSize || "14px",
+      }}
+      onClick={props.handleClick}
+    >
+      {props.buttonText || "Click me"}
+    </button>
   );
 }
