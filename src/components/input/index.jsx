@@ -16,7 +16,7 @@ function Input(props) {
         <Button
           color={props.buttonColor}
           buttonText={props.buttonText}
-          handleClick={() => window.alert('button clicked from input')}
+          handleClick={() => props.handleButtonClick()}
         />
       )}
     </div>
