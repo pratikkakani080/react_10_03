@@ -8,7 +8,8 @@ import { useEffect, useState } from "react";
 function App() {
   const [data, setData] = useState(0);
   const [text, setText] = useState("");
-  console.log("out side log", text);
+  const [movies, setMovies] = useState([]);
+  console.log("movies***", movies);
 
   useEffect(() => {
     console.log("mounting", text);
@@ -18,8 +19,29 @@ function App() {
     };
   }, [text]); // add blank dependency to run useEffect once
 
+  useEffect(() => {
+    fetch("https://www.freetestapi.com/api/v1/movies")
+      .then((res) => res.json())
+      .then((res) => setMovies(res));
+  }, []);
+
   return (
     <>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+        {movies.map((el) => {
+          return (
+            <div style={{ maxWidth: "200px", border: "1px solid" }}>
+              <img
+                src={el.poster}
+                style={{ border: "1px solid", height: "200px", width: "200px" }}
+              />
+              <h3>{el.title}</h3>
+              <p>{el.rating}</p>
+            </div>
+          );
+        })}
+      </div>
+
       <Input
         ph={"Please type ..."}
         type={"text"}
