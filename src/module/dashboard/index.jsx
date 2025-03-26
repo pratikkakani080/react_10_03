@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Input from "../../components/input";
 import Button from "../../components/button";
+import Card from "../../components/card";
+import { useNavigate } from "react-router";
 
 function Dashboard() {
+  const navigate = useNavigate();
   const [data, setData] = useState(0);
   const [text, setText] = useState("");
   const [movies, setMovies] = useState([]);
-  console.log("movies***", movies);
 
   useEffect(() => {
     console.log("mounting", text);
@@ -22,19 +24,21 @@ function Dashboard() {
       .then((res) => setMovies(res));
   }, []);
 
+  const handleClick = () => {
+    navigate("/movie-details");
+  };
+
   return (
     <>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
         {movies.map((el) => {
           return (
-            <div style={{ maxWidth: "200px", border: "1px solid" }}>
-              <img
-                src={el.poster}
-                style={{ border: "1px solid", height: "200px", width: "200px" }}
-              />
-              <h3>{el.title}</h3>
-              <p>{el.rating}</p>
-            </div>
+            <Card
+              poster={el.poster}
+              rating={el.rating}
+              title={el.title}
+              handleClick={handleClick}
+            />
           );
         })}
       </div>
