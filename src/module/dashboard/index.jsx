@@ -24,20 +24,22 @@ function Dashboard() {
       .then((res) => setMovies(res));
   }, []);
 
-  const handleClick = () => {
-    navigate("/movie-details");
+  const handleClick = (movie) => {
+    console.log('movie**', movie);
+    // localStorage.setItem('movie', JSON.stringify(movie))
+    navigate(`/movie-details?id=${movie.id}`);
   };
 
   return (
     <>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-        {movies.map((el) => {
+        {movies.map((movie) => {
           return (
             <Card
-              poster={el.poster}
-              rating={el.rating}
-              title={el.title}
-              handleClick={handleClick}
+              poster={movie.poster}
+              rating={movie.rating}
+              title={movie.title}
+              handleClick={() => handleClick(movie)}
             />
           );
         })}
