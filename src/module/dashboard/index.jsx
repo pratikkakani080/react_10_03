@@ -27,7 +27,12 @@ function Dashboard() {
   const handleClick = (movie) => {
     console.log('movie**', movie);
     // localStorage.setItem('movie', JSON.stringify(movie))
-    navigate(`/movie-details?id=${movie.id}`);
+
+    // passing data to another page with query params
+    // navigate(`/movie-details?id=${movie.id}`);
+
+    // passing data to another page with dynamic route
+    navigate(`/movie-details/${movie.id}`);
   };
 
   return (
