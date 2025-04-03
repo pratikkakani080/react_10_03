@@ -1,16 +1,16 @@
-import { useState } from "react";
 import "./App.css";
 import Routing from "./Routing";
-import Context from "./configs/context";
-import Header from "./module/header";
+import ContextProvider from "./components/providers/contextProvider";
+import Context2Provider from "./components/providers/context2Provider";
 
 function App() {
-  const [globalData, setGlobalData] = useState({})
   return (
     <>
-      <Context.Provider value={{ globalData: globalData, setGlobalData: setGlobalData }}>
-        <Routing />
-      </Context.Provider>
+      <ContextProvider>
+        <Context2Provider>
+          <Routing />
+        </Context2Provider>
+      </ContextProvider>
     </>
   );
 }
