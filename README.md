@@ -9,3 +9,6 @@ to transfer data from children to parent
 - state uplifting
 - callback function
 - context API / redux / global state management
+
+CI-CD
+- Continuous integration Continuous deployment
