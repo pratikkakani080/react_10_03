@@ -1,40 +1,54 @@
 import React, { useState } from "react";
+import { emailRegex } from "../../utils";
 
 function ContactUs() {
   const [user, setUser] = useState({});
   const [error, setError] = useState({});
   console.log("error", error);
+  console.log("user", user);
 
   const handleChange = (ev) => {
     // setUser((prev) => {
     //   return { ...prev, [ev.target.name]: ev.target.value };
     // })
-    const { name, value } = ev.target;
-    setUser({ ...user, [name]: value });
+    const { name, value, checked } = ev.target;
+    setUser({ ...user, [name]: name === "tncapply" ? checked : value });
+    setError({ ...error, [name]: "" });
   };
 
   const isValidate = () => {
     let formIsValid = true;
     let errors = {};
-    if (!user.fname) {
+    if (!user.fname || user.fname.trim() === "") {
       formIsValid = false;
       errors.fname = "please enter valid first name";
     }
-    if (!user.lname) {
+    if (!user.lname || user.lname.trim() === "") {
       formIsValid = false;
       errors.lname = "please enter valid last name";
     }
-    if (!user.email) {
+    if (
+      !user.email ||
+      user.email.trim() === "" ||
+      !emailRegex.test(user.email)
+    ) {
       formIsValid = false;
       errors.email = "please enter valid email";
     }
-    if (!user.password) {
+    if (!user.password || user.password.trim() === "") {
       formIsValid = false;
       errors.password = "please enter valid password";
     }
-    if (!user.confirmPassword) {
+    if (!user.confirmPassword || user.confirmPassword.trim() === "") {
       formIsValid = false;
       errors.confirmPassword = "please enter valid confirm password";
+    } else if (user.confirmPassword !== user.password) {
+      formIsValid = false;
+      errors.confirmPassword = "password does not match";
+    }
+    if (!user.tncapply) {
+      formIsValid = false;
+      errors.tncapply = "please tick the box";
     }
     setError(errors);
     return formIsValid;
@@ -128,6 +142,14 @@ function ContactUs() {
         onChange={(ev) => handleChange(ev)}
       />
       <br />
+      <input
+        type="checkbox"
+        id="tncapply"
+        name="tncapply"
+        onChange={(ev) => handleChange(ev)}
+      />
+      <label for="tncapply"> I accept terms and conditions</label>
+      <br></br>
       <br />
       <input type="submit" value="Submit" onClick={handleSubmit} />
     </div>
