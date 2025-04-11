@@ -6,6 +6,7 @@ import MovieDetails from "./module/movieDetails";
 import Header from "./module/header";
 import Blog from "./module/blog";
 import About from "./module/about";
+import Users from "./module/users";
 
 function Routing() {
   return (
@@ -16,6 +17,7 @@ function Routing() {
         <Route path="/contact" element={<><Header /><ContactUs /></>} />
         <Route path="/about" element={<About />} />
         <Route path="/movie-details/:id" element={<MovieDetails />} />
+        <Route path="/users" element={<Users/>} />
       </Routes>
   );
 }

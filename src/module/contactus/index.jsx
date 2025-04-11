@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { emailRegex } from "../../utils";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 function ContactUs() {
+  const navigate = useNavigate()
   const [user, setUser] = useState({});
   const [error, setError] = useState({});
   console.log("error", error);
@@ -55,8 +58,12 @@ function ContactUs() {
   };
 
   const handleSubmit = () => {
+    let users = JSON.parse(localStorage.getItem('user')) || []
     if (isValidate()) {
-      localStorage.setItem("user", JSON.stringify(user));
+      users.push(user)
+      localStorage.setItem("user", JSON.stringify(users));
+      toast.success('User successfully registered')
+      navigate('/users')
     }
   };
 
