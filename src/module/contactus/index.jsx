@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { emailRegex } from "../../utils";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
 
 function ContactUs() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [user, setUser] = useState({});
   const [error, setError] = useState({});
-  console.log("error", error);
-  console.log("user", user);
+  const [params] = useSearchParams()
+  const id = params.get('id')
+  console.log('id**', id);
 
+  useEffect(() => {
+    if (id) {
+      const storedData = JSON.parse(localStorage.getItem('user'))
+      setUser(storedData.find(el => el.id === id))
+    }
+  }, [id])
+  
+  
   const handleChange = (ev) => {
     // setUser((prev) => {
     //   return { ...prev, [ev.target.name]: ev.target.value };
@@ -58,12 +68,17 @@ function ContactUs() {
   };
 
   const handleSubmit = () => {
-    let users = JSON.parse(localStorage.getItem('user')) || []
+    let users = JSON.parse(localStorage.getItem("user")) || [];
     if (isValidate()) {
-      users.push(user)
+      if (id) {
+        // existing data mapping
+        users = users.map(el => el.id === id ? user : el)
+      } else {
+        users.push({ ...user, id: uuidv4() });
+      }
       localStorage.setItem("user", JSON.stringify(users));
-      toast.success('User successfully registered')
-      navigate('/users')
+      toast.success("User successfully registered");
+      navigate("/users");
     }
   };
 
@@ -82,6 +97,7 @@ function ContactUs() {
         type="text"
         id="fname"
         name="fname"
+        value={user.fname}
         onChange={(ev) => handleChange(ev)}
       />
       <br />
@@ -98,6 +114,7 @@ function ContactUs() {
         type="text"
         id="lname"
         name="lname"
+        value={user.lname}
         onChange={(ev) => handleChange(ev)}
       />
       <br />
@@ -114,6 +131,7 @@ function ContactUs() {
         type="email"
         id="email"
         name="email"
+        value={user.email}
         onChange={(ev) => handleChange(ev)}
       />
       <br />
@@ -130,6 +148,7 @@ function ContactUs() {
         type="password"
         id="password"
         name="password"
+        value={user.password}
         onChange={(ev) => handleChange(ev)}
       />
       <br />
@@ -146,6 +165,7 @@ function ContactUs() {
         type="password"
         id="confirmPassword"
         name="confirmPassword"
+        value={user.confirmPassword}
         onChange={(ev) => handleChange(ev)}
       />
       <br />
@@ -153,6 +173,7 @@ function ContactUs() {
         type="checkbox"
         id="tncapply"
         name="tncapply"
+        checked={user.tncapply}
         onChange={(ev) => handleChange(ev)}
       />
       <label for="tncapply"> I accept terms and conditions</label>

@@ -9,6 +9,7 @@ function Header() {
         <Link to="/blog">Blog</Link>
         <Link to="/blog/blog-details">Blog details</Link>
         <Link to="/contact">Contact us</Link>
+        <Link to="/users">Users</Link>
         <span style={{ cursor: "pointer" }} onClick={() => navigate("/about")}>
           About
         </span>
