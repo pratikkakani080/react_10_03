@@ -7,6 +7,7 @@ import Header from "./module/header";
 import Blog from "./module/blog";
 import About from "./module/about";
 import Users from "./module/users";
+import PerImp from "./module/PerImp";
 
 function Routing() {
   return (
@@ -18,6 +19,7 @@ function Routing() {
         <Route path="/about" element={<About />} />
         <Route path="/movie-details/:id" element={<MovieDetails />} />
         <Route path="/users" element={<Users/>} />
+        <Route path="/imp" element={<PerImp/>} />
       </Routes>
   );
 }
